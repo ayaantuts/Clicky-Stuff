@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 
 function Cube() {
     const [data, setData] = useState([
-        { id: 1, color: 'bg-blue-500' },
-        { id: 2, color: 'bg-blue-500' },
-        { id: 3, color: 'bg-blue-500' },
-        { id: 4, color: 'bg-blue-500' },
-        { id: 5, color: 'bg-blue-500' },
-        { id: 6, color: 'bg-blue-500' },
-        { id: 7, color: 'bg-blue-500' },
-        { id: 8, color: 'bg-blue-500' },
-        { id: 9, color: 'bg-blue-500' }
+        { id: 1, color: 'bg-blue-500', visited: false },
+        { id: 2, color: 'bg-blue-500', visited: false },
+        { id: 3, color: 'bg-blue-500', visited: false },
+        { id: 4, color: 'bg-blue-500', visited: false },
+        { id: 5, color: 'bg-blue-500', visited: false },
+        { id: 6, color: 'bg-blue-500', visited: false },
+        { id: 7, color: 'bg-blue-500', visited: false },
+        { id: 8, color: 'bg-blue-500', visited: false },
+        { id: 9, color: 'bg-blue-500', visited: false }
     ]);
     const [clickedIds, setClickedIds] = useState([]);
     const [count, setCount] = useState(0);
@@ -19,6 +19,7 @@ function Cube() {
     useEffect(() => {
         if (count === 9)
             resetPreviousColors();
+        setData(data => data.map(d => {return {...d, visited :false}}));
     }, [count]);
 
     const changeColor = (id) => {
@@ -63,9 +64,13 @@ function Cube() {
                 // data[cube - 1].color = 'bg-blue-500';
                 const updatedData = data.map(cube => {
                     if (cube.id === cId) {
+                        cube.visited = true;
                         return { ...cube, color: 'bg-blue-500' };
                     } else {
-                        return cube;
+                        if (cube.visited)
+                            return { ...cube, color: 'bg-blue-500' };
+                        else
+                            return cube;
                     }
                 });
                 setData(updatedData);
